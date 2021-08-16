@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load specifications %}
+{% block content %}
+<div class="container">
+<div class="row">
+    <nav aria-label="breadcrumb" class="mt-1" style="padding-left: 15px; padding-right: 0;">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'base' %}">Главная</a></li>
+        <li class="breadcrumb-item"><a href="#">{{ product.category.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+      </ol>
+    </nav>
+    <div class="col-md-4">
+        <img src="{{ product.image.url }}" alt="..." class="img-fluid">
+    </div>
+    <div class="col-md-8" style="margin-top: 68px; padding-right: 0;">
+        <h3> {{ product.title }} </h3>
+        <p>Цена: {{ product.price }} сом</p>
+        <p> {% if product.in_stock == True %}
+            в наличии {% else %} Товара нету в наличии {% endif %}</p>
+        <p>Описание: {{product.description}} </p>
+    </div>
+    <p class="mt-3" style="padding-left: 10px">Характеристики:</p>
+    {{product| product_spec}}
+<!--    {% if product.category.slug == 'notebooks' %}-->
+<!--    {% include 'notebook_specification.html' %}-->
+<!--    {% else %}-->
+<!--        {% include 'smartphone_specification.html' %}-->
+<!--    {% endif %}-->
+</div>
+{% endblock content %}
+</div>

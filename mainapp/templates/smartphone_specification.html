@@ -1,0 +1,41 @@
+<table class="table table-hover" style="padding-left: 25px; width: 90%">
+  <tbody>
+    <tr>
+      <td>Диагональ</td>
+      <td>{{ product.diagonal }}</td>
+    </tr>
+    <tr>
+      <td>Тип дисплея</td>
+      <td>{{ product.display }}</td>
+    </tr>
+    <tr>
+      <td>Разрешения экрана</td>
+      <td>{{ product.resolution }}</td>
+    </tr>
+    <tr>
+      <td>Объем батареи</td>
+      <td>{{ product.accum_volume }}</td>
+    </tr>
+   <tr>
+      <td>Оперативная память</td>
+      <td>{{ product.ram }}</td>
+    </tr>
+    <tr>
+      <td>Дополнительная sd-карта</td>
+      <td>{% if product.sd == True %} Имеется {% else %} Не имеется {% endif %}</td>
+    </tr>
+   <tr>
+      <td>Главная камера</td>
+      <td>{{ product.main_cam_mp }}</td>
+   </tr>
+   <tr>
+      <td>Фронтальная камера</td>
+      <td>{{ product.frontal_cam_mp }}</td>
+   </tr>
+   <tr>
+      <td>Количесто памяти</td>
+      <td>{{ product.rom }}</td>
+   </tr>
+  </tbody>
+</table>
+
