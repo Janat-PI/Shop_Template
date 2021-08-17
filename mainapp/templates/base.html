@@ -39,11 +39,11 @@
                                 </li>
                               </ul>
                     </ul>
-                    <form class="d-flex">
+                    <form class="d-flex" method="get" action="{% url 'cart' %}">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            Корзина
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ cart.products.count }}</span>
                         </button>
                     </form>
                 </div>
@@ -53,8 +53,8 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Makers</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">test makers test</p>
+                    <h1 class="display-4 fw-bolder">Makers shop</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">shop makers shop</p>
                 </div>
             </div>
         </header>
