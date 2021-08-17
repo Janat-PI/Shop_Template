@@ -5,6 +5,7 @@ from .models import *
 from .mixins import *
 from django.http import HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
+from .forms import *
 
 
 class BaseView(CartMixin, View):
@@ -41,6 +42,7 @@ class ProductDetailView(CartMixin, CategoryDetailMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ct_model'] = self.model._meta.model_name
+        context['cart'] = self.cart
         return context
 
 
@@ -51,6 +53,11 @@ class CategoryDetailView(CartMixin, CategoryDetailMixin,  DetailView):
     context_object_name = 'category'
     template_name = 'category_detail.html'
     slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = self.cart
+        return context
 
 
 class AddToCartView(CartMixin, View):
@@ -114,3 +121,16 @@ class CartView(CartMixin, View):
             'categories': categories
         }
         return render(request, 'cart.html', context)
+
+
+class CheckoutView(CartMixin, View):
+
+    def get(self, request , *args, **kwargs):
+        categories = Category.objects.get_categories_for_top_sidebar()
+        form = OrderForm(request.POST or None)
+        context = {
+            'cart': self.cart,
+            'categories': categories,
+            'form': form
+        }
+        return render(request, 'checkout.html', context)
