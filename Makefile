@@ -3,3 +3,5 @@ migrates:
 	python manage.py migrate
 run:
 	python manage.py runserver
+test:
+	python manage.py test

@@ -163,22 +163,13 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
-    def save(self, *args, **kwargs):
-        cart_data = self.products.aggregate(models.Sum('final_price'), models.Count('id'))
-        if cart_data.get('final_price__sum'):
-            self.final_price = cart_data['final_price__sum']
-        else:
-            self.final_price = 0
-        self.total_products = cart_data['id__count']
-        super().save(*args, **kwargs)
-
 
 class Customer(models.Model):
 
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     phone = models.CharField(max_length=13, verbose_name='Номер телефона', null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name='Адресс', null=True, blank=True)
-    orders = models.ManyToManyField('Order', verbose_name='Заказы покупателя', related_name='related_customer')
+    orders = models.ManyToManyField('Order', blank=True, verbose_name='Заказы покупателя', related_name='related_customer')
 
     def __str__(self):
         return f'Покупатель {self.user.first_name}{self.user.last_name}'
@@ -231,11 +222,13 @@ class Order(models.Model):
     STATUS_IN_PROGRESS = 'in_progress'
     STATUS_READY = 'is_ready'
     STATUS_COMPLETED = 'completed'
+    STATUS_PAYED = 'payed'
 
     BUYING_TYPE_SELF = 'self'
     BUYING_TYPE_DELIVERY = 'delivery'
 
     STATUS_CHOICES = (
+        (STATUS_PAYED, 'Заказ оплачен'),
         (STATUS_NEW, 'Новый заказ'),
         (STATUS_IN_PROGRESS, 'Заказ в обработке'),
         (STATUS_READY, 'Заказ готов'),
@@ -251,6 +244,7 @@ class Order(models.Model):
     first_name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
     phone = models.CharField(max_length=13, verbose_name='Телефон')
+    cart = models.ForeignKey(Cart, verbose_name='Корзина', on_delete=models.CASCADE, null=True, blank=True)
     address = models.CharField(max_length=900, verbose_name='Адрес', null=True, blank=True)
     status = models.CharField(max_length=100, verbose_name='Статус заказа', choices=STATUS_CHOICES, default=STATUS_NEW)
     buying_type = models.CharField(

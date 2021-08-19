@@ -21,6 +21,7 @@ class CategoryDetailMixin(SingleObjectMixin):
         context['categories'] = Category.objects.get_categories_for_top_sidebar()
         return context
 
+
 class CartMixin(View):
 
     def dispatch(self, request, *args, **kwargs):
