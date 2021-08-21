@@ -2,9 +2,10 @@ from django.urls import path
 from .views import *
 from django.views.decorators.cache import cache_page
 
+
 urlpatterns = [
-    path('', cache_page(120)(BaseView.as_view()), name='base'),
-    path('products/<str:ct_model>/<str:slug>/', cache_page(60)(ProductDetailView.as_view()), name='product_detail'),
+    path('', cache_page(150)(BaseView.as_view()), name='base'),
+    path('products/<str:ct_model>/<str:slug>/', cache_page(250)(ProductDetailView.as_view()), name='product_detail'),
     path('category/<str:slug>/', cache_page(60)(CategoryDetailView.as_view()), name='category_detail'),
     path('cart/', CartView.as_view(), name='cart'),
     path('add-to-cart/<str:ct_model>/<str:slug>/', AddToCartView.as_view(), name='add_to_cart'),
